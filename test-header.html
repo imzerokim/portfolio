@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header Test - Figma Design</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .header-container {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .header-variant {
+            margin: 20px 0;
+            padding: 20px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        h2 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+        <h1>Header Variants based on Figma Design</h1>
+        
+        <div class="header-variant">
+            <h2>Variant 1: Logo Highlighted</h2>
+            <header>
+                <div class="header-container">
+                    <div class="logo highlighted">
+                        <a href="index.html" class="logo-link">
+                            <span class="logo-text">Nayeong Kim</span>
+                        </a>
+                    </div>
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="#" class="nav-link">
+                                <span>Works</span>
+                            </a></li>
+                            <li><a href="#" class="nav-link">
+                                <span>About</span>
+                            </a></li>
+                            <li><a href="#" class="nav-link">
+                                <span>CV</span>
+                            </a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </div>
+        
+        <div class="header-variant">
+            <h2>Variant 2: Works Highlighted</h2>
+            <header>
+                <div class="header-container">
+                    <div class="logo">
+                        <a href="index.html" class="logo-link">
+                            <span class="logo-text">Nayeong Kim</span>
+                        </a>
+                    </div>
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="#" class="nav-link active" data-page="works">
+                                <div class="nav-background works-background"></div>
+                                <span>Works</span>
+                            </a></li>
+                            <li><a href="#" class="nav-link">
+                                <span>About</span>
+                            </a></li>
+                            <li><a href="#" class="nav-link">
+                                <span>CV</span>
+                            </a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </div>
+        
+        <div class="header-variant">
+            <h2>Variant 3: About Highlighted</h2>
+            <header>
+                <div class="header-container">
+                    <div class="logo">
+                        <a href="index.html" class="logo-link">
+                            <span class="logo-text">Nayeong Kim</span>
+                        </a>
+                    </div>
+                    <nav class="main-nav">
+                        <ul>
+                            <li><a href="#" class="nav-link">
+                                <span>Works</span>
+                            </a></li>
+                            <li><a href="#" class="nav-link active" data-page="about">
+                                <div class="nav-background about-background"></div>
+                                <span>About</span>
+                            </a></li>
+                            <li><a href="#" class="nav-link">
+                                <span>CV</span>
+                            </a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+        </div>
+    </div>
+</body>
+</html> 
