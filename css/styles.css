@@ -628,6 +628,11 @@ body {
         font-size: 14px;
     }
     
+    /* 원 크기 70%로 축소 */
+    .circle-1, .circle-2, .circle-3 {
+        transform: scale(0.7);
+    }
+    
     /* 일반 프로젝트 이미지 비율 유지 */
     .project-card {
         width: 100%;
