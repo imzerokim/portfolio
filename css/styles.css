@@ -443,6 +443,7 @@ body {
     max-width: 1200px;
     margin: 183px auto 60px;
     padding: 0 40px;
+    text-align: center;
 }
 
 .publications-header {
@@ -452,11 +453,10 @@ body {
     background-color: var(--green-accent);
     padding: 0px 8px;
     border-radius: 0;
-    margin: 0 auto;
+    margin: 0 auto 60px;
     width: auto;
     height: 30px;
     position: relative;
-    margin-bottom: 60px;
 }
 
 .publications-header span {
@@ -484,6 +484,7 @@ body {
     font-weight: 700;
     margin-bottom: 20px;
     letter-spacing: 0.02em;
+    text-align: left;
 }
 
 .publication-item {
@@ -494,6 +495,7 @@ body {
     padding-bottom: 25px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
+    text-align: left;
 }
 
 .publication-item:last-child {
@@ -710,7 +712,7 @@ body {
     .contact-info {
         gap: 15px;
     }
-
+    
     .publications-list {
         gap: 30px;
     }
@@ -761,7 +763,6 @@ body {
         font-size: 14px;
     }
     
- 
     /* 일반 프로젝트 이미지 비율 유지 */
     .project-card {
         width: 100%;
