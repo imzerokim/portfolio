@@ -88,6 +88,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
+            
+            // Add click event listener for publications header
+            const publicationsHeader = document.querySelector('.publications-header');
+            if (publicationsHeader) {
+                // Initialize publications content to be visible
+                const publicationsContent = document.querySelector('.publications-content');
+                if (publicationsContent) {
+                    publicationsContent.style.display = 'block';
+                }
+                
+                // Publication header click functionality removed
+                // No toggle functionality or arrow rotation
+            }
         });
 
     // Load the footer component
