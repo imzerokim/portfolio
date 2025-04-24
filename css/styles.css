@@ -443,7 +443,6 @@ body {
     max-width: 1200px;
     margin: 183px auto 60px;
     padding: 0 40px;
-    text-align: center;
 }
 
 .publications-header {
@@ -457,6 +456,7 @@ body {
     width: auto;
     height: 30px;
     position: relative;
+    margin-bottom: 60px;
 }
 
 .publications-header span {
@@ -465,11 +465,56 @@ body {
     position: relative;
     z-index: 1;
     margin-right: 10px;
-    
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
+}
+
+.publications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.publications-category {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+}
+
+.publication-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.publication-item:last-child {
+    border-bottom: none;
+}
+
+.publication-title {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.publication-authors {
+    font-size: 14px;
+    color: var(--secondary-text-color);
+    line-height: 1.5;
+}
+
+.publication-venue {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--secondary-text-color);
 }
 
 /* Footer */
@@ -603,6 +648,27 @@ body {
     .contact-info {
         gap: 15px;
     }
+
+    .publications-list {
+        gap: 30px;
+    }
+    
+    .publications-category {
+        font-size: 16px;
+    }
+    
+    .publication-item {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .publication-title {
+        font-size: 15px;
+    }
+    
+    .publication-authors, .publication-venue {
+        font-size: 13px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -628,11 +694,7 @@ body {
         font-size: 14px;
     }
     
-    /* 원 크기 70%로 축소 */
-    .circle-1, .circle-2, .circle-3 {
-        transform: scale(0.7);
-    }
-    
+ 
     /* 일반 프로젝트 이미지 비율 유지 */
     .project-card {
         width: 100%;
