@@ -148,6 +148,34 @@ body {
     color: #555;
 }
 
+/* CV 링크 스타일 */
+.cv-link {
+    text-decoration: none;
+    color: var(--primary-text-color);
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.05rem;
+    transition: color 0.3s ease;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-transform: uppercase;
+}
+
+.cv-link span {
+    position: relative;
+    z-index: 2;
+    white-space: nowrap;
+    padding: 1px 4px;
+    background-color: transparent;
+}
+
+.cv-link:hover {
+    color: #555;
+}
+
 /* Logo highlight style */
 .logo.highlighted .logo-text {
     background-color: var(--yellow-accent);
