@@ -563,23 +563,6 @@ body {
     display: block;
 }
 
-/* 큰 화면에서 DIS 2025와 (submitted) 사이에 줄바꿈 추가 */
-@media (min-width: 769px) {
-    .publication-date:contains("(submitted)") {
-        white-space: pre-line;
-    }
-    
-    /* CSS에는 :contains 선택자가 없으므로 첫 번째 publication-date에만 적용 */
-    .publication-item:first-child .publication-date::after {
-        content: "\A(submitted)";
-        white-space: pre;
-    }
-    
-    .publication-item:first-child .publication-date {
-        content: "DIS 2025";
-    }
-}
-
 .publication-links {
     display: flex;
     gap: 10px;
