@@ -725,11 +725,12 @@ body {
     .publication-item {
         margin-bottom: 20px;
         padding-bottom: 20px;
+        padding-right: 0; /* 모바일에서는 오른쪽 패딩 제거 */
     }
     
     .publication-title {
         font-size: 15px;
-        padding-right: 65px;
+        padding-right: 0; /* 모바일에서는 오른쪽 패딩 제거 */
     }
     
     .publication-authors, .publication-venue {
@@ -737,7 +738,34 @@ body {
     }
     
     .publication-date {
+        position: static; /* 절대 위치 제거 */
         font-size: 13px;
+        margin-bottom: 5px; /* 날짜와 제목 사이 간격 */
+        text-align: left;
+        font-weight: 500;
+        color: var(--primary-text-color);
+        order: 1; /* 날짜를 맨 위로 */
+    }
+    
+    .publication-title {
+        order: 2; /* 제목을 날짜 다음으로 */
+    }
+    
+    .publication-authors {
+        order: 3; /* 저자를 제목 다음으로 */
+    }
+    
+    .publication-venue {
+        order: 4; /* venue를 저자 다음으로 */
+    }
+    
+    .publication-links {
+        order: 5; /* 링크를 맨 아래로 */
+    }
+    
+    .publication-item {
+        display: flex;
+        flex-direction: column;
     }
 }
 
