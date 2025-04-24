@@ -101,6 +101,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Publication header click functionality removed
                 // No toggle functionality or arrow rotation
             }
+            
+            // CV 링크에 클릭 이벤트 추가
+            const cvLink = document.querySelector('.cv-link');
+            if (cvLink) {
+                cvLink.addEventListener('click', function(e) {
+                    // 기본 동작 중지 방지 - 다운로드 허용
+                    // e.preventDefault();
+                    console.log("CV 다운로드 링크 클릭됨");
+                });
+            }
         });
 
     // Load the footer component

@@ -183,5 +183,38 @@
     <footer id="site-footer"></footer>
 
     <script src="js/main.js"></script>
+    
+    <!-- CV 다운로드를 위한 인라인 스크립트 -->
+    <script>
+        // 페이지 로드 완료 후 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            // 메인 앱 로드 후 헤더의 CV 링크 대신하는 기능 추가
+            setTimeout(function() {
+                const cvLink = document.querySelector('.cv-link');
+                if (cvLink) {
+                    cvLink.addEventListener('click', function(e) {
+                        e.preventDefault(); // 기본 동작 중지
+                        
+                        // 다운로드 링크 동적 생성
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = 'assets/files/NayeongKim_CV.pdf';
+                        downloadLink.download = 'NayeongKim_CV.pdf';
+                        downloadLink.style.display = 'none';
+                        document.body.appendChild(downloadLink);
+                        
+                        // 클릭 이벤트 발생시켜 다운로드 시작
+                        downloadLink.click();
+                        
+                        // 링크 제거
+                        setTimeout(function() {
+                            document.body.removeChild(downloadLink);
+                        }, 100);
+                        
+                        return false;
+                    });
+                }
+            }, 1000); // 헤더 로드 후 1초 후에 실행
+        });
+    </script>
 </body>
 </html> 
