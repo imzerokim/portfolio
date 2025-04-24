@@ -496,7 +496,7 @@ body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
     text-align: left;
-    padding-top: 20px; /* 상단 패딩 추가 */
+    padding-right: 120px; /* 오른쪽에 날짜 표시 영역 확보 */
 }
 
 .publication-item:last-child {
@@ -507,8 +507,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     font-weight: 700;
-    padding-right: 120px; /* 오른쪽 학회명 공간 확보 - 여유 있게 120px로 증가 */
-    margin-top: 20px; /* title과 date 사이 간격 추가 */
+    /* padding-right: 80px; 제거하고 publication-item에 적용 */
 }
 
 .publication-authors {
@@ -547,14 +546,11 @@ body {
 
 .publication-date {
     position: absolute;
-    top: 20px; /* title과 같은 높이로 조정 */
+    top: 0;
     right: 0;
     font-size: 14px;
     font-weight: 500;
     color: var(--primary-text-color);
-    text-align: right;
-    display: flex;
-    flex-direction: column;
 }
 
 .publication-links {
