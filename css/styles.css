@@ -552,6 +552,7 @@ body {
     font-weight: 500;
     color: var(--primary-text-color);
     text-align: right;
+    padding-top: 2px; /* 날짜를 2px 아래로 내려 title과 높이 정렬 */
 }
 
 /* 데스크톱에서 줄바꿈 추가 */
