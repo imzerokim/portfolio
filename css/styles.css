@@ -491,8 +491,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-bottom: 25px;
-    padding-bottom: 25px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     position: relative;
     text-align: left;
@@ -552,7 +552,7 @@ body {
     font-weight: 500;
     color: var(--primary-text-color);
     text-align: right;
-    padding-top: 2px; /* 날짜를 2px 아래로 내려 title과 높이 정렬 */
+    padding-top: 3.5px; /* 날짜를 2px 아래로 내려 title과 높이 정렬 */
 }
 
 /* 데스크톱에서 줄바꿈 추가 */
