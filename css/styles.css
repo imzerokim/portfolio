@@ -634,6 +634,16 @@ body {
         font-size: 13px;
         line-height: 20px;
     }
+    
+    .publication-links {
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+    
+    .pdf-link, .video-link {
+        width: auto;
+        min-width: 60px;
+    }
 }
 
 @media (max-width: 685px) {
@@ -822,7 +832,21 @@ body {
         font-size: 14px;
     }
     
- 
+    /* 모바일 환경에서 publication links 스타일 조정 */
+    .publication-links {
+        flex-wrap: nowrap;
+        gap: 6px;
+    }
+    
+    .publication-link {
+        padding: 0 6px;
+    }
+    
+    .pdf-link, .video-link {
+        width: auto;
+        min-width: auto;
+    }
+    
     /* 일반 프로젝트 이미지 비율 유지 */
     .project-card {
         width: 100%;
