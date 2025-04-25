@@ -189,7 +189,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     vy: 0,
                     mass: 3,
                     rotation: -167,
-                    rotationSpeed: 0
+                    rotationSpeed: 0,
+                    autoMoveFactor: 0.2
                 },
                 {
                     element: circle2,
@@ -200,7 +201,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     vy: 0,
                     mass: 2,
                     rotation: 72,
-                    rotationSpeed: 0
+                    rotationSpeed: 0,
+                    autoMoveFactor: 0.15
                 },
                 {
                     element: circle3,
@@ -211,7 +213,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     vy: 0,
                     mass: 1,
                     rotation: 6,
-                    rotationSpeed: 0
+                    rotationSpeed: 0,
+                    autoMoveFactor: 0.1
                 }
             ];
             
@@ -225,6 +228,31 @@ document.addEventListener('DOMContentLoaded', function() {
             let mouseY = backgroundHeight / 2;
             let mouseInHero = false;
             let animationStarted = false;
+            
+            // 모바일 환경 감지 (터치 디바이스 또는 작은 화면)
+            const isMobile = window.matchMedia("(max-width: 768px)").matches || 
+                            ('ontouchstart' in window) || 
+                            (navigator.maxTouchPoints > 0);
+            
+            // 자동 움직임을 위한 타이머와 방향
+            let autoMoveTime = 0;
+            const autoMoveTargetX = backgroundWidth / 2;
+            const autoMoveTargetY = backgroundHeight / 2;
+            let autoMoveOffsetX = 0;
+            let autoMoveOffsetY = 0;
+            
+            // 자동 움직임 위치 업데이트 함수
+            function updateAutoMovement() {
+                autoMoveTime += 0.01;
+                // 사인, 코사인 함수로 부드럽게 움직이는 좌표 생성
+                autoMoveOffsetX = Math.sin(autoMoveTime) * backgroundWidth * 0.25;
+                autoMoveOffsetY = Math.cos(autoMoveTime * 0.7) * backgroundHeight * 0.25;
+                
+                // 5초마다 새로운 움직임 패턴 설정
+                if (autoMoveTime > Math.PI * 2) {
+                    autoMoveTime = 0;
+                }
+            }
             
             // Update mouse position on move over the entire document
             document.addEventListener('mousemove', function(e) {
@@ -270,9 +298,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const currentBackgroundWidth = currentBackgroundRect.width;
                 const currentBackgroundHeight = currentBackgroundRect.height - 80;
                 
+                // 모바일에서 자동 움직임 업데이트
+                if (isMobile || !mouseInHero) {
+                    updateAutoMovement();
+                }
+                
                 circles.forEach((circle, i) => {
                     // Apply different forces based on whether mouse is in hero
-                    if (mouseInHero) {
+                    if (mouseInHero && !isMobile) {
                         // Calculate distance to mouse
                         const dx = mouseX - circle.x;
                         const dy = mouseY - circle.y;
@@ -290,8 +323,27 @@ document.addEventListener('DOMContentLoaded', function() {
                             circle.vy += forceDirection * (dy / distance) * forceMagnitude * Math.min(100 / distance, maxForce);
                         }
                     } else {
-                        // Apply a slower drifting motion when mouse is outside
-                        circle.vx *= 0.98; // Slower friction when mouse is outside
+                        // 모바일이거나 마우스가 밖에 있는 경우 - 자동 움직임 적용
+                        const autoMoveX = autoMoveTargetX + autoMoveOffsetX;
+                        const autoMoveY = autoMoveTargetY + autoMoveOffsetY;
+                        
+                        // 각 원마다 조금 다른 움직임 패턴 생성
+                        const offsetAngle = (i * Math.PI * 2) / circles.length;
+                        const circleAutoMoveX = autoMoveX + Math.sin(autoMoveTime + offsetAngle) * 50;
+                        const circleAutoMoveY = autoMoveY + Math.cos(autoMoveTime + offsetAngle) * 50;
+                        
+                        // 자동 목표 지점을 향한 힘 계산
+                        const dx = circleAutoMoveX - circle.x;
+                        const dy = circleAutoMoveY - circle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance > 5) {
+                            circle.vx += (dx / distance) * circle.autoMoveFactor;
+                            circle.vy += (dy / distance) * circle.autoMoveFactor;
+                        }
+                        
+                        // Apply a slower drifting motion
+                        circle.vx *= 0.98; // Slower friction
                         circle.vy *= 0.98;
                     }
                     

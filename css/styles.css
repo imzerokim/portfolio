@@ -794,7 +794,22 @@ body {
     
     .circle-1, .circle-2, .circle-3 {
         transform-origin: center;
-        transform: scale(0.8);
+        transform: scale(0.6);
+    }
+    
+    .circle-1 {
+        width: 230px;
+        height: 230px;
+    }
+    
+    .circle-2 {
+        width: 170px;
+        height: 170px;
+    }
+    
+    .circle-3 {
+        width: 130px;
+        height: 120px;
     }
 
     /* 모바일에서 푸터 스타일 업데이트 */
@@ -905,5 +920,25 @@ body {
         flex-direction: column;
         gap: 10px;
         align-items: center;
+    }
+    
+    /* 더 작은 모바일 화면에서 원 크기 추가 조정 */
+    .circle-1, .circle-2, .circle-3 {
+        transform: scale(0.5);
+    }
+    
+    .circle-1 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .circle-2 {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .circle-3 {
+        width: 120px;
+        height: 110px;
     }
 } 
