@@ -589,22 +589,38 @@ body {
 /* Responsive Publications Styles */
 @media (max-width: 768px) {
     .publications {
-        margin: 120px auto 40px;
-        padding: 0 24px;
+        margin-top: 30px;
     }
     
     .publications-content {
-        margin-top: 40px;
+        margin-top: 20px;
     }
     
     .publication-title {
         font-size: 16px;
-        line-height: 22px;
     }
     
     .publication-authors {
-        font-size: 13px;
-        line-height: 20px;
+        font-size: 12px;
+    }
+    
+    /* 원 크기 조정은 JavaScript에서 처리하도록 제거 */
+
+    /* 모바일에서 푸터 스타일 업데이트 */
+    #site-footer {
+        height: auto;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 20px;
+        justify-content: center;
+        height: auto;
+    }
+    
+    .contact-info {
+        gap: 15px;
     }
 }
 
@@ -748,10 +764,7 @@ body {
         font-size: 16px;
     }
     
-    .circle-1, .circle-2, .circle-3 {
-        transform-origin: center;
-        transform: scale(0.8);
-    }
+    /* 원 크기 조정은 JavaScript에서 처리하도록 제거 */
 
     /* 모바일에서 푸터 스타일 업데이트 */
     #site-footer {

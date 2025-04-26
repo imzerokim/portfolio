@@ -168,11 +168,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (hero && heroBackground && circle1 && circle2 && circle3) {
             console.log("Circle interaction initialized");
             
+            // 화면 너비에 따른 원 크기 조정 계수
+            const scaleFactor = window.innerWidth <= 576 ? 0.9 : 1;
+            
+            // 원의 실제 DOM 크기 조정
+            if (window.innerWidth <= 576) {
+                circle1.style.width = "252px";  // 280px의 90%
+                circle1.style.height = "252px";
+                
+                circle2.style.width = "180px";  // 200px의 90%
+                circle2.style.height = "180px";
+                
+                circle3.style.width = "135px";  // 150px의 90%
+                circle3.style.height = "126px";  // 140px의 90%
+            }
+            
             // Set initial positions and velocities for the circles
             const circles = [
                 {
                     element: circle1,
-                    radius: 153, // half of 306px
+                    radius: 153 * scaleFactor, // 작은 화면에서는 90%로 축소
                     x: 480,
                     y: 180,
                     vx: 0,
@@ -183,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 {
                     element: circle2,
-                    radius: 107, // half of 213.84px
+                    radius: 107 * scaleFactor, // 작은 화면에서는 90%로 축소
                     x: 480,
                     y: 320,
                     vx: 0,
@@ -194,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 },
                 {
                     element: circle3,
-                    radius: 90, // approximated from ellipse
+                    radius: 90 * scaleFactor, // 작은 화면에서는 90%로 축소
                     x: 280,
                     y: 120,
                     vx: 0,
@@ -204,6 +219,61 @@ document.addEventListener('DOMContentLoaded', function() {
                     rotationSpeed: 0
                 }
             ];
+            
+            // 화면 크기 변경 감지 및 원 크기 조정
+            window.addEventListener('resize', function() {
+                const newScaleFactor = window.innerWidth <= 576 ? 0.9 : 1;
+                
+                // 원의 반지름 조정
+                circles[0].radius = 153 * newScaleFactor;
+                circles[1].radius = 107 * newScaleFactor;
+                circles[2].radius = 90 * newScaleFactor;
+                
+                // 원의 실제 DOM 크기 조정
+                if (window.innerWidth <= 576) {
+                    circle1.style.width = "252px";  // 280px의 90%
+                    circle1.style.height = "252px";
+                    
+                    circle2.style.width = "180px";  // 200px의 90%
+                    circle2.style.height = "180px";
+                    
+                    circle3.style.width = "135px";  // 150px의 90%
+                    circle3.style.height = "126px";  // 140px의 90%
+                } else {
+                    circle1.style.width = "280px";
+                    circle1.style.height = "280px";
+                    
+                    circle2.style.width = "200px";
+                    circle2.style.height = "200px";
+                    
+                    circle3.style.width = "150px";
+                    circle3.style.height = "140px";
+                }
+                
+                // 화면 크기가 변경되면 배경 크기도 업데이트
+                const currentBackgroundRect = heroBackground.getBoundingClientRect();
+                const currentBackgroundWidth = currentBackgroundRect.width;
+                const currentBackgroundHeight = currentBackgroundRect.height - 80;
+                
+                // 원들이 화면 범위를 벗어나지 않도록 위치 조정
+                circles.forEach(circle => {
+                    if (circle.x - circle.radius < 20) {
+                        circle.x = circle.radius + 20;
+                    }
+                    if (circle.x + circle.radius > currentBackgroundWidth - 20) {
+                        circle.x = currentBackgroundWidth - circle.radius - 20;
+                    }
+                    if (circle.y - circle.radius < 20) {
+                        circle.y = circle.radius + 20;
+                    }
+                    if (circle.y + circle.radius > currentBackgroundHeight - 20) {
+                        circle.y = currentBackgroundHeight - circle.radius - 20;
+                    }
+                    
+                    // DOM 요소에 위치 적용
+                    circle.element.style.transform = `translate(${circle.x - circle.radius}px, ${circle.y - circle.radius}px) rotate(${circle.rotation}deg)`;
+                });
+            });
             
             // Get hero background dimensions
             const backgroundRect = heroBackground.getBoundingClientRect();
@@ -240,14 +310,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     mouseInHero = false;
                     
-                    // If mouse is outside hero, apply some random subtle movement
-                    // This keeps animation going even when mouse is outside
-                    if (Math.random() < 0.01) { // Occasionally change direction
-                        circles.forEach(circle => {
-                            circle.vx += (Math.random() - 0.5) * 0.5;
-                            circle.vy += (Math.random() - 0.5) * 0.5;
-                        });
-                    }
+                    // Remove the random movement when mouse is outside hero
                 }
             });
             
@@ -279,23 +342,23 @@ document.addEventListener('DOMContentLoaded', function() {
                             circle.vx += forceDirection * (dx / distance) * forceMagnitude * Math.min(100 / distance, maxForce);
                             circle.vy += forceDirection * (dy / distance) * forceMagnitude * Math.min(100 / distance, maxForce);
                         }
+                        
+                        // Apply friction to slow down movement
+                        circle.vx *= 0.95;
+                        circle.vy *= 0.95;
+                        
+                        // Update position based on velocity
+                        circle.x += circle.vx;
+                        circle.y += circle.vy;
+                        
+                        // Add a slight rotation based on movement
+                        circle.rotationSpeed = (circle.vx + circle.vy) * 0.1;
+                        circle.rotation += circle.rotationSpeed;
                     } else {
-                        // Apply a slower drifting motion when mouse is outside
-                        circle.vx *= 0.98; // Slower friction when mouse is outside
-                        circle.vy *= 0.98;
+                        // Stop all movement when mouse is outside hero
+                        circle.vx = 0;
+                        circle.vy = 0;
                     }
-                    
-                    // Apply friction to slow down movement
-                    circle.vx *= 0.95;
-                    circle.vy *= 0.95;
-                    
-                    // Update position based on velocity
-                    circle.x += circle.vx;
-                    circle.y += circle.vy;
-                    
-                    // Add a slight rotation based on movement
-                    circle.rotationSpeed = (circle.vx + circle.vy) * 0.1;
-                    circle.rotation += circle.rotationSpeed;
                     
                     // Keep circles within the hero-background bounds with padding for radius
                     const leftPadding = 20; // 왼쪽 패딩을 다시 20px로 설정
