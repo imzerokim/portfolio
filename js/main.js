@@ -101,16 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Publication header click functionality removed
                 // No toggle functionality or arrow rotation
             }
-            
-            // CV 링크에 클릭 이벤트 추가
-            const cvLink = document.querySelector('.cv-link');
-            if (cvLink) {
-                cvLink.addEventListener('click', function(e) {
-                    // 기본 동작 중지 방지 - 다운로드 허용
-                    // e.preventDefault();
-                    console.log("CV 다운로드 링크 클릭됨");
-                });
-            }
         });
 
     // Load the footer component
@@ -189,8 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     vy: 0,
                     mass: 3,
                     rotation: -167,
-                    rotationSpeed: 0,
-                    autoMoveFactor: 0.2
+                    rotationSpeed: 0
                 },
                 {
                     element: circle2,
@@ -201,8 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     vy: 0,
                     mass: 2,
                     rotation: 72,
-                    rotationSpeed: 0,
-                    autoMoveFactor: 0.15
+                    rotationSpeed: 0
                 },
                 {
                     element: circle3,
@@ -213,8 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     vy: 0,
                     mass: 1,
                     rotation: 6,
-                    rotationSpeed: 0,
-                    autoMoveFactor: 0.1
+                    rotationSpeed: 0
                 }
             ];
             
@@ -228,48 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
             let mouseY = backgroundHeight / 2;
             let mouseInHero = false;
             let animationStarted = false;
-            
-            // 모바일 환경 감지 (터치 디바이스 또는 작은 화면)
-            const isMobile = window.matchMedia("(max-width: 768px)").matches || 
-                            ('ontouchstart' in window) || 
-                            (navigator.maxTouchPoints > 0);
-            
-            // 576px 이하 화면에서만 자동 움직임 적용
-            const isSmallScreen = window.matchMedia("(max-width: 576px)").matches;
-            
-            // 자동 움직임을 위한 타이머와 방향
-            let autoMoveTime = 0;
-            const autoMoveTargetX = backgroundWidth / 2;
-            const autoMoveTargetY = backgroundHeight / 2;
-            
-            // 각 원마다 독립적인 움직임을 위한 랜덤 값 초기화
-            circles.forEach(circle => {
-                circle.autoMovePhase = Math.random() * Math.PI * 2; // 0~2π 사이 랜덤 위상
-                circle.autoMoveSpeed = 0.005 + Math.random() * 0.015; // 0.005~0.02 사이 랜덤 속도
-                circle.autoMoveRadius = 30 + Math.random() * 50; // 30~80px 사이 랜덤 반경
-                circle.noiseOffsetX = Math.random() * 1000;
-                circle.noiseOffsetY = Math.random() * 1000;
-            });
-            
-            // 자동 움직임 위치 업데이트 함수
-            function updateAutoMovement() {
-                autoMoveTime += 0.01;
-                
-                // 각 원마다 독립적인 움직임 업데이트
-                circles.forEach(circle => {
-                    circle.autoMovePhase += circle.autoMoveSpeed;
-                    // 2π를 초과하면 다시 0부터 시작 (순환)
-                    if (circle.autoMovePhase > Math.PI * 2) {
-                        circle.autoMovePhase -= Math.PI * 2;
-                    }
-                    
-                    // 가끔씩 랜덤하게 방향 약간 변경 (10% 확률)
-                    if (Math.random() < 0.1) {
-                        circle.noiseOffsetX += Math.random() * 0.2 - 0.1;
-                        circle.noiseOffsetY += Math.random() * 0.2 - 0.1;
-                    }
-                });
-            }
             
             // Update mouse position on move over the entire document
             document.addEventListener('mousemove', function(e) {
@@ -315,14 +260,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const currentBackgroundWidth = currentBackgroundRect.width;
                 const currentBackgroundHeight = currentBackgroundRect.height - 80;
                 
-                // 작은 화면(576px 이하)에서만 자동 움직임 업데이트
-                if (isSmallScreen || (!mouseInHero && isMobile)) {
-                    updateAutoMovement();
-                }
-                
                 circles.forEach((circle, i) => {
-                    // 작은 화면(576px 이하)이 아니고 마우스가 영역 안에 있을 때만 마우스 추적
-                    if (mouseInHero && !isSmallScreen) {
+                    // Apply different forces based on whether mouse is in hero
+                    if (mouseInHero) {
                         // Calculate distance to mouse
                         const dx = mouseX - circle.x;
                         const dy = mouseY - circle.y;
@@ -339,41 +279,15 @@ document.addEventListener('DOMContentLoaded', function() {
                             circle.vx += forceDirection * (dx / distance) * forceMagnitude * Math.min(100 / distance, maxForce);
                             circle.vy += forceDirection * (dy / distance) * forceMagnitude * Math.min(100 / distance, maxForce);
                         }
-                    } else if (isSmallScreen || (!mouseInHero && isMobile)) {
-                        // 작은 화면이거나 마우스가 밖에 있는 모바일인 경우 - 자동 움직임 적용
-                        
-                        // 각 원마다 독립적인 경로 생성 (사인/코사인 + 랜덤 노이즈)
-                        const centerX = currentBackgroundWidth / 2;
-                        const centerY = currentBackgroundHeight / 2;
-                        
-                        // 원형 움직임과 랜덤 노이즈 조합
-                        const targetX = centerX + Math.sin(circle.autoMovePhase) * circle.autoMoveRadius + 
-                                      (Math.sin(circle.noiseOffsetX) * 20);
-                        const targetY = centerY + Math.cos(circle.autoMovePhase) * circle.autoMoveRadius + 
-                                      (Math.cos(circle.noiseOffsetY) * 20);
-                        
-                        // 목표 지점으로 부드럽게 이동
-                        const dx = targetX - circle.x;
-                        const dy = targetY - circle.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance > 5) {
-                            circle.vx += (dx / distance) * circle.autoMoveFactor;
-                            circle.vy += (dy / distance) * circle.autoMoveFactor;
-                        }
-                        
-                        // 약간의 랜덤성 추가
-                        circle.vx += (Math.random() - 0.5) * 0.2;
-                        circle.vy += (Math.random() - 0.5) * 0.2;
-                        
-                        // Apply a slower drifting motion
-                        circle.vx *= 0.97; // Slower friction
-                        circle.vy *= 0.97;
                     } else {
-                        // Apply minimal movement for non-mobile when mouse is outside
-                        circle.vx *= 0.98;
+                        // Apply a slower drifting motion when mouse is outside
+                        circle.vx *= 0.98; // Slower friction when mouse is outside
                         circle.vy *= 0.98;
                     }
+                    
+                    // Apply friction to slow down movement
+                    circle.vx *= 0.95;
+                    circle.vy *= 0.95;
                     
                     // Update position based on velocity
                     circle.x += circle.vx;

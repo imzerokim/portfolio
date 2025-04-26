@@ -148,34 +148,6 @@ body {
     color: #555;
 }
 
-/* CV 링크 스타일 */
-.cv-link {
-    text-decoration: none;
-    color: var(--primary-text-color);
-    font-size: 15px;
-    line-height: 18px;
-    letter-spacing: 0.05rem;
-    transition: color 0.3s ease;
-    font-weight: 400;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    text-transform: uppercase;
-}
-
-.cv-link span {
-    position: relative;
-    z-index: 2;
-    white-space: nowrap;
-    padding: 1px 4px;
-    background-color: transparent;
-}
-
-.cv-link:hover {
-    color: #555;
-}
-
 /* Logo highlight style */
 .logo.highlighted .logo-text {
     background-color: var(--yellow-accent);
@@ -598,7 +570,6 @@ body {
     font-size: 14px;
     color: #4d4d4d;
     line-height: 22px;
-    white-space: nowrap;
 }
 
 .pdf-link {
@@ -634,21 +605,6 @@ body {
     .publication-authors {
         font-size: 13px;
         line-height: 20px;
-    }
-    
-    .publication-links {
-        flex-wrap: nowrap;
-        gap: 8px;
-    }
-    
-    .pdf-link, .video-link {
-        width: auto;
-        min-width: 60px;
-    }
-    
-    .publication-link span {
-        font-size: 13px;
-        white-space: nowrap;
     }
 }
 
@@ -794,22 +750,7 @@ body {
     
     .circle-1, .circle-2, .circle-3 {
         transform-origin: center;
-        transform: scale(0.6);
-    }
-    
-    .circle-1 {
-        width: 230px;
-        height: 230px;
-    }
-    
-    .circle-2 {
-        width: 170px;
-        height: 170px;
-    }
-    
-    .circle-3 {
-        width: 130px;
-        height: 120px;
+        transform: scale(0.8);
     }
 
     /* 모바일에서 푸터 스타일 업데이트 */
@@ -920,25 +861,5 @@ body {
         flex-direction: column;
         gap: 10px;
         align-items: center;
-    }
-    
-    /* 더 작은 모바일 화면에서 원 크기 추가 조정 */
-    .circle-1, .circle-2, .circle-3 {
-        transform: scale(0.5);
-    }
-    
-    .circle-1 {
-        width: 200px;
-        height: 200px;
-    }
-    
-    .circle-2 {
-        width: 150px;
-        height: 150px;
-    }
-    
-    .circle-3 {
-        width: 120px;
-        height: 110px;
     }
 } 
